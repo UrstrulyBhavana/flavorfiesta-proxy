@@ -1,9 +1,17 @@
 const express = require("express");
 const cors = require("cors");
-const fetch = require("node-fetch"); // v2
+const fetch = require("node-fetch");
+const path = require("path");
 
 const app = express();
-app.use(cors()); // allow all origins for now
+app.use(cors());
+
+app.use(
+  "/mock",
+  express.static(path.join(__dirname, "public", "mock"), {
+    setHeaders: (res) => res.set("cache-control", "no-store"),
+  })
+);
 
 app.get("/healthz", (_req, res) => res.status(200).send("ok"));
 
@@ -51,3 +59,19 @@ const PORT = process.env.PORT || 5174;
 app.listen(PORT, () => {
   console.log(`✅ Proxy running at http://localhost:${PORT}`);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
